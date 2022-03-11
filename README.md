@@ -29,8 +29,8 @@ Description=The command to make the Keychron K2-k4 work with Function keys
 [Service]
 Type=oneshot
 RemainAfterExit=true
-ExecStart=/bin/bash -c "sudo echo 1 | sudo tee /sys/module/hid_apple/parameters/fnmode"
-ExecStop=/bin/bash -c "sudo echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode"
+ExecStart=/bin/sh -c 'echo 1 | tee /sys/module/hid_apple/parameters/fnmode'
+ExecStop=/bin/sh -c 'echo 0 | tee /sys/module/hid_apple/parameters/fnmode'
 
 [Install]
 WantedBy=multi-user.target
@@ -68,7 +68,8 @@ it in `/etc/systemd/system/`, doing Step 3 at the end.
 
 ### Toubleshooting
 
-If this doesn't work swapping `ExecStart` and `ExecStop` might help.
+If this doesn't work swapping `ExecStart` and `ExecStop` might help (This fixed
+my C2).
 
 ```
 [Unit]
@@ -77,8 +78,8 @@ Description=The command to make the Keychron K2-k4 work with Function keys
 [Service]
 Type=oneshot
 RemainAfterExit=true
-ExecStart=/bin/bash -c "sudo echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode"
-ExecStop=/bin/bash -c "sudo echo 1 | sudo tee /sys/module/hid_apple/parameters/fnmode"
+ExecStart=/bin/sh -c 'echo 0 | tee /sys/module/hid_apple/parameters/fnmode'
+ExecStop=/bin/sh -c 'echo 1 | tee /sys/module/hid_apple/parameters/fnmode'
 
 [Install]
 WantedBy=multi-user.target
